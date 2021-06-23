@@ -16,6 +16,12 @@ int main(int argc, const char * argv[]) {
         vec::vector<int> mv(2);
         cout<<"size:"<<mv.size()<<endl;
         cout<<"capacity: "<<mv.capacity()<<endl;
+        cout<<*mv.begin()<<endl;
+        cout<<mv.front()<<endl;
+        vec::vector<int>::iterator it;
+        it = mv.begin();
+        *it = 1;
+        cout<<mv.front()<<endl;
     }
     catch (std::exception& e) {
         cout<<e.what();
