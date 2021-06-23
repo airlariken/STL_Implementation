@@ -7,26 +7,27 @@
 
 #ifndef myVector_h
 #define myVector_h
-
+#include "my_stl_iterator.h"
 #include <exception>
 //declaratoin
+namespace MyStl{
+
 
 namespace vec {
-//iterator category
-struct input_iterator_tag{};
-struct forward_iterator_tag:public input_iterator_tag{};
-struct bidirectional_iterator_tag:public forward_iterator_tag{};
-struct random_access_iterator_tag:public bidirectional_iterator_tag{};
 
 template<typename _Tp>
 class _vector_iterator
 {
+public:
     //五个问题
     typedef     random_access_iterator_tag   iterator_category;
     typedef     _Tp                          value_type;
     typedef     _Tp*                         pointer;
     typedef     _Tp&                         reference;
     typedef     unsigned int                 difference_type;
+    
+    
+    typedef _vector_iterator<_Tp>            __self;
 private:
     pointer node;
 public:
@@ -34,6 +35,11 @@ public:
     _vector_iterator():node(nullptr){}
     reference operator*(){return *this->node;}
     pointer operator->(){return &(operator*());}
+    bool operator!=(const __self& x){return node != x.node;}
+    __self& operator++(){
+        node = node+1;
+        return *this;
+    }
 };
 
 
@@ -93,11 +99,11 @@ public:
     long unsigned int size(){return this->_impl.finish - this->_impl.start;}
     long unsigned int capacity(){return this->_impl.end_of_storage - this->_impl.start;}
     iterator begin(){return (iterator)this->_impl.start;}
-    iterator end(){return this->_impl.end();}
+    iterator end(){return this->_impl.finish;}
     reference front(){return *this->_impl.start;}
     reference back(){return *(this->_impl.finish-1);}
 };
-
+}
 }
 
 #endif /* myVector_h */
