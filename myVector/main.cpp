@@ -6,9 +6,26 @@
 //
 
 #include <iostream>
-
+#include "myVector.h"
+using namespace std;
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    
     std::cout << "Hello, World!\n";
+    ptrdiff_t a;
+    try {
+        vec::vector<int> mv(2);
+        cout<<"size:"<<mv.size()<<endl;
+        cout<<"capacity: "<<mv.capacity()<<endl;
+    }
+    catch (std::exception& e) {
+        cout<<e.what();
+    }
+    catch (const char* e){
+        cout<<e<<endl;
+    }
+    catch (...){
+        cout<<"catch unexpected exception..."<<endl;
+    }
+    
     return 0;
 }
