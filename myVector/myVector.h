@@ -40,14 +40,29 @@ public:
         node = node+1;
         return *this;
     }
+    __self operator +(const int& n) const{
+        __self t = this->node + n;
+        return t;}
+    friend __self operator+(const int& n, const __self& it) {
+        __self t = it.node + n;
+        return t;
+    }
+    __self operator -(const int& n) const {
+        __self t = this->node - n;
+        return t;}
+    difference_type operator -(const __self& it) const {
+ 
+        return (difference_type)(this->node - it.node);
+    }
+//    friend __self operator+(const int& n, const __self& it)//1-it好像没啥意义啊
 };
 
-
+//类中嵌套类实现namespace的作用域效果
 template<typename _Tp>
 class _vector_base
 {
 public:
-    typedef      _Tp*               pointer;
+    typedef      _Tp*                pointer;
     
     struct myVector_impl_data{
     public:
@@ -56,7 +71,7 @@ public:
         pointer    finish;
     };
     
-    struct myVector_impl: public myVector_impl_data
+    struct myVector_impl: public myVector_impl_data         //inheritance
     {
         //没有alloca所以无需ini，我也不知道要干嘛。。笑死
     };
@@ -69,7 +84,7 @@ protected:
 };
 
 template<typename _Tp>
-class vector:public _vector_base<_Tp>
+class vector: public _vector_base<_Tp>
 {
 public:
     typedef     _vector_base<_Tp>                _Base;
@@ -87,7 +102,8 @@ public:
         if (_size < 0)
             throw "size is nagative (invalid)";
         else if (_size == 0) {
-            this->_impl.finish = this->_impl.start = new Value_type[1];
+//            this->_impl.finish = this->_impl.start = new Value_type[1];
+            _impl.end_of_storage = _impl.finish = _impl.start = nullptr;
         }
         else{
             this->_impl.finish = this->_impl.start = new Value_type[_size];
@@ -96,12 +112,42 @@ public:
             this->_impl.end_of_storage = this->_impl.start + _size;
         }
     }
-    long unsigned int size(){return this->_impl.finish - this->_impl.start;}
-    long unsigned int capacity(){return this->_impl.end_of_storage - this->_impl.start;}
-    iterator begin(){return (iterator)this->_impl.start;}
-    iterator end(){return this->_impl.finish;}
-    reference front(){return *this->_impl.start;}
-    reference back(){return *(this->_impl.finish-1);}
+    long unsigned int size()const {return this->_impl.finish - this->_impl.start;}
+    long unsigned int capacity()const {return this->_impl.end_of_storage - this->_impl.start;}
+    iterator begin()const {return (iterator)this->_impl.start;}
+    iterator end()const {return this->_impl.finish;}
+    reference front()const {return *this->_impl.start;}
+    reference back()const {return *(this->_impl.finish-1);}
+    
+    void push_back(const Value_type& val){
+        if (_impl.start == nullptr) {
+            _impl.finish = _impl.start = new Value_type[1];
+            _impl.end_of_storage = _impl.start + 1;
+        }
+        if (_impl.finish == _impl.end_of_storage) {
+            long unsigned int original_size = _impl.end_of_storage-_impl.start;
+            pointer t_start = new Value_type[original_size*2];
+            if (t_start == nullptr) {
+                throw std::bad_alloc();
+            }
+            std::copy(_impl.start, _impl.end_of_storage, t_start);
+            delete [] _impl.start;
+            _impl.start = t_start;
+            _impl.finish = t_start + original_size;
+            _impl.end_of_storage = t_start + original_size*2;
+            
+        }
+        *_impl.finish = val;
+        ++_impl.finish;
+    }
+    void erase(iterator it){
+        std::copy(it+1, end(), it);
+        --_impl.finish;
+    }
+    void clear(){
+        delete [] _impl.start;
+        _impl.end_of_storage = _impl.finish = _impl.start = nullptr;
+    }
 };
 }
 }
