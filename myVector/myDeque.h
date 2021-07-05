@@ -10,6 +10,7 @@
 #include "my_stl_iterator.h"
 #include "myVector.h"
 #define DEQUE_DEFAULT_BUFF_BYTES 512
+#define DEQUE_ 8
 namespace MyStl {
 
 inline size_t __deque_buf_size(size_t buf_size, size_t ele_size) {
@@ -102,8 +103,8 @@ public:
             this->cur += 1;
             return *this;
         }
-        this->node = this->node+1;
-        this->set_node(this->node, __S_deque_buff_size());
+        
+        this->set_node(this->node+1, __S_deque_buff_size());
         return *this;
     }
     
@@ -127,7 +128,10 @@ public:
         --*this;
         return temp;
     }
-    
+    __self& operator[](int n) {
+        this->cur += n;
+        return *this;
+    }
     difference_type operator-(const __self& it) const {//it必须在*this之后
         return (difference_type)(this->cur - this->first) + (it.last - it.cur) + (this->node - it.node - 1)*__S_deque_buff_size();
     }
@@ -201,8 +205,7 @@ protected:
         size_t finish_last_offset_elements = (map_size * buff_size - num_elements) - start_first_offset_elements;//从start.last开始向左的偏移量
         this->finish.cur = this->finish.last - (finish_last_offset_elements % buff_size) - 1;
     }
-    
-    
+
 };
 
 
@@ -215,6 +218,7 @@ public:
     typedef             _Tp                                         value_type;
     typedef             _Tp*                                        pointer;
     typedef             _Tp&                                        reference;
+    typedef             const _Tp&                                  const_reference;
     typedef             unsigned int                                difference_type;
     typedef  typename   _Deque_base< _Tp, BufSiz>::iterator         iterator;
     typedef  typename   _Deque_base< _Tp, BufSiz>::const_iterator   const_iterator;
@@ -225,66 +229,100 @@ public:
     deque() = default;
     deque(size_t size):_Deque_base<_Tp, BufSiz>(size){}
     //operator override
-    reference operator[](const int& n){
-        
+    const_reference operator[](const int& n) const {//有必要const吗
+        iterator it = this->start;
+        return *it[n];
     }
-    //functions
+    reference operator[](const int& n)  {//有必要const吗
+        iterator it = this->start;
+        return *it[n];
+    }
     
+    //functions
     void push_back(const value_type& n) {
         if(this->finish.last-1 != this->finish.cur) {
             *(this->finish.cur) = n;
-            ++this->finish;
+            ++(this->finish.cur);
         }
-            
         else {
-            if (this->finish.cur == iterator(this->map + this->map_size).last-1) {
-                //vector扩容
+            if (this->finish.cur == iterator(this->map + this->map_size - 1).last-1) {
+                //扩容
                 push_back_aux(n);
             }
             else {
-//                size_t i = iterator::__S_deque_buff_size();
-//                this->finish.set_node(this->finish.node + 1, i);
                 map_pointer new_node = this->finish.node + 1;
                 if (*new_node == nullptr)
                     *new_node = new value_type[iterator::__S_deque_buff_size()];
-                
                 *(this->finish.cur) = n;
-                ++this->finish;
+                this->finish.set_node(new_node, iterator::__S_deque_buff_size());
             }
         }
     }
-    void push_back_aux(const value_type& n) {//扩容
-        map_pointer new_map = new pointer[this->map_size+8];
+    void push_front(const value_type& n) {
+        if(this->start.first != this->start.cur) {
+            --(this->start.cur);
+            *(this->start.cur) = n;
+        }
+        else {
+            if (this->start.cur == iterator(this->map).first) {
+                //扩容
+                push_front_aux(n);
+            }
+            else {
+                map_pointer new_node = this->start.node - 1;
+                if (*new_node == nullptr)
+                    *new_node = new value_type[iterator::__S_deque_buff_size()];
+                
+                this->start.set_node(new_node, iterator::__S_deque_buff_size());
+                this->start.cur = this->start.last-1;
+                *(this->start.cur) = n;
+            }
+        }
+    }
+    void push_front_aux(const value_type& n) {//扩容翻倍
+        reallocate();
+        //开一块新空间给finish作为超尾位置
+        *(this->start.node-1) = new value_type[iterator::__S_deque_buff_size()];
+        //赋值并且将finish挪到超尾位置
+        this->start.set_node(this->start.node - 1, iterator::__S_deque_buff_size());
+        this->start.cur = this->start.last-1;
+        *(this->start.cur) = n;
+    }
+    void push_back_aux(const value_type& n) {//扩容翻倍
+        reallocate();
+        //开一块新空间给finish作为超尾位置
+        *(this->finish.node+1) = new value_type[iterator::__S_deque_buff_size()];
+        //赋值并且将finish挪到超尾位置
+        *(this->finish.cur) = n;
+        this->finish.set_node(this->finish.node + 1, iterator::__S_deque_buff_size());
+    }
+    void reallocate() {
+        //记录两个偏移值
         size_t start_offset = this->start.node - this->map;
         size_t finish_offset = this->finish.node - this->map;
-        for (int i = 0; i < this->map_size+8; ++i)  new_map[i] = nullptr;
-        std::copy(this->map, this->map+this->map_size, new_map);
-        this->map_size += 8;
+        size_t node_cnt = finish_offset - start_offset;
+        
+        map_pointer new_map = new pointer[this->map_size*2];//开辟一个更大的数组map， 两倍扩容
+        size_t new_map_start_offset = (this->map_size*2 - node_cnt) / 2;
+        for (int i = 0; i < this->map_size*2; ++i)  new_map[i] = nullptr;       //ini
+        std::copy(this->map+start_offset, this->map+finish_offset+1, new_map+new_map_start_offset);                //copy
+        //更新map和mapsize
+        this->map_size *= 2;
         this->map = new_map;
-        this->start.node = this->map + start_offset;
-        this->finish.node = this->map + finish_offset;
-        
-//        if(this->finish.last-1 == this->finish.cur) {
-//            map_pointer new_node = this->finish.node + 1;
-            if (*this->finish.node == nullptr) {
-                *this->finish.node = new value_type[iterator::__S_deque_buff_size()];
-                this->finish.set_node(this->finish.node, iterator::__S_deque_buff_size());
-            }
-//        }
-        
-        *this->finish.cur = n;
-        ++this->finish;
-
-        
+        //记录偏移值
+        this->start.node = this->map + new_map_start_offset;
+        this->finish.node = this->start.node + node_cnt;
     }
-    
 public:
-    iterator begin()const{
+    iterator begin() const{
         return this->start;
     }
-    iterator end()const{
+    iterator end() const{
         return this->finish;
     }
+    difference_type size() const{return this->finish - this->start;}
+    difference_type capacity() const{return this->map_size * iterator::__S_deque_buff_size();}
+    
 };
 
 
