@@ -9,44 +9,54 @@
 #include "myVector.h"
 #include "my_stl_iterator.h"
 #include "my_algorithm.h"
+#include "myDeque.h"
 using namespace std;
-//struct fun1{
-//    void operator()(int& a){a *= 3;}
-//};
-//struct fun2{
-//    void operator()(int& a){cout<<a<<'\t';}
-//};
+
+struct A{
+    char b = 'c';
+    double c = 2333;
+    int d = 2;
+};
 int main(int argc, const char * argv[]) {
+//    A a;
+//    cout<<( (A*)((char*)&a.c-(char*)&(((A*)0)->c)) )->d<<endl;
     
 //    std::cout << "Hello, World!\n";
 //    ptrdiff_t a;
+
+//    cout<<sizeof(void*)<<endl;
     try {
         using namespace MyStl;
         vec::vector<int> mv(2);
-        mv.push_back(1);
-        mv.push_back(3);
-        mv.push_back(5);
-        mv.push_back(7);
-        mv.push_back(11);
         
+        
+        deque<int, 2> m_deq(5);
+        int cnt = 0;
+        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+            *it1 = cnt++;
+        }
+        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+            cout<<*it1<<'\t';
+        }
+        for (int i = 0; i < 10; ++i) {
+            m_deq.push_back(i*10);
+            for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+                cout<<*it1<<'\t';
+            }
+            cout<<endl;
+//            cout<<*(m_deq.end()-1)<<'\t';
+        }
+        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+            cout<<*it1<<'\t';
+        }
+//        cout<<*(m_deq.begin()+5)<<endl;
         cout<<"size:"<<mv.size()<<endl;
         cout<<"capacity: "<<mv.capacity()<<endl;
         
         vec::vector<int>::iterator my_it;
-        my_it = mv.begin();
-        auto my_it_end = mv.end();
-        cout<<"iterator distance :"<<mv.end()-mv.begin()<<endl;
-//        cout<<*my_it;
-//        auto it = 9 + my_it;
-//        auto it = my_it + 9;
-//        *my_it = 233;
-//        cout<<*my_it;
-//        cout<<*mv.begin()<<endl;
-//        cout<<mv.back()<<endl;
-//        vec::vector<int>::iterator it;
-//        it = mv.begin();
-//        *it = 1;
-//        cout<<mv.front()<<endl;
+
+
+//        std::__void_t<vec::vector<int>::iterator::difference_type>::type* a;
 
         auto l_f2 = [](int& n){n*3;};
         auto l_f1 = [](const int& n){cout<<n<<'\t';};
@@ -64,6 +74,9 @@ int main(int argc, const char * argv[]) {
 //        mv.clear();
         cout<<"capacity: "<<mv.capacity()<<endl;
 //        ::sort(mv.begin(), mv.end());  cout<<endl;
+        
+        typedef IteratorTraits<int*>::value_type i;
+        i a = 1;
 
     }
     catch (std::exception& e) {
