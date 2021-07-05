@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MyStl::_Deque_base&lt;int, 1ul&gt;::initialize_map(unsigned long):myDeque.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "&amp;(map[7])">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;(map[6])">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_base&lt;int, 0ul&gt;::initialize_map(unsigned long):myDeque.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "map_size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_iterator&lt;int, int&amp;, int*, 1ul&gt;::operator++():myDeque.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::deque&lt;int, 1ul&gt;::push_back_aux(int const&amp;):myDeque.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "&amp;(this-&gt;map[9])">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;this-&gt;map[10]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_iterator&lt;int, int&amp;, int*, 0ul&gt;::operator+=(unsigned int const&amp;):myDeque.h">
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "m_deq.end()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_iterator&lt;int, int&amp;, int*, 0ul&gt;::operator==(MyStl::_Deque_iterator&lt;int, int&amp;, int*, 0ul&gt; const&amp;):myDeque.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_iterator&lt;int, int&amp;, int*, 0ul&gt;::operator++():myDeque.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::_Deque_base&lt;int, 9ul&gt;::initialize_map(unsigned long):myDeque.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "map_size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyStl::deque&lt;int, 1ul&gt;::push_back(int const&amp;):myDeque.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "&amp;(this-&gt;map[7])">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;(this-&gt;map[8])">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;(this-&gt;map[9])">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;(this-&gt;map[10])">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

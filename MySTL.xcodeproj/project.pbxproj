@@ -25,7 +25,7 @@
 /* Begin PBXFileReference section */
 		58027160269007450028F92B /* myDeque.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = myDeque.h; sourceTree = "<group>"; };
 		58A066D1268437D300F17D7B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		58FBD8A32682DD700008FA45 /* myVector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = myVector; sourceTree = BUILT_PRODUCTS_DIR; };
+		58FBD8A32682DD700008FA45 /* MySTL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MySTL; sourceTree = BUILT_PRODUCTS_DIR; };
 		58FBD8A62682DD700008FA45 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		58FBD8AE2682DD7C0008FA45 /* myVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myVector.h; sourceTree = "<group>"; };
 		58FBD8B0268336AB0008FA45 /* my_stl_iterator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = my_stl_iterator.h; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		58FBD89A2682DD700008FA45 = {
 			isa = PBXGroup;
 			children = (
-				58FBD8A52682DD700008FA45 /* myVector */,
+				58FBD8A52682DD700008FA45 /* MySTL */,
 				58FBD8A42682DD700008FA45 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,12 +55,12 @@
 		58FBD8A42682DD700008FA45 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				58FBD8A32682DD700008FA45 /* myVector */,
+				58FBD8A32682DD700008FA45 /* MySTL */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		58FBD8A52682DD700008FA45 /* myVector */ = {
+		58FBD8A52682DD700008FA45 /* MySTL */ = {
 			isa = PBXGroup;
 			children = (
 				58FBD8A62682DD700008FA45 /* main.cpp */,
@@ -71,15 +71,15 @@
 				58FBD8B0268336AB0008FA45 /* my_stl_iterator.h */,
 				58A066D1268437D300F17D7B /* README.md */,
 			);
-			path = myVector;
+			path = MySTL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58FBD8A22682DD700008FA45 /* myVector */ = {
+		58FBD8A22682DD700008FA45 /* MySTL */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58FBD8AA2682DD700008FA45 /* Build configuration list for PBXNativeTarget "myVector" */;
+			buildConfigurationList = 58FBD8AA2682DD700008FA45 /* Build configuration list for PBXNativeTarget "MySTL" */;
 			buildPhases = (
 				58FBD89F2682DD700008FA45 /* Sources */,
 				58FBD8A02682DD700008FA45 /* Frameworks */,
@@ -89,9 +89,9 @@
 			);
 			dependencies = (
 			);
-			name = myVector;
+			name = MySTL;
 			productName = myVector;
-			productReference = 58FBD8A32682DD700008FA45 /* myVector */;
+			productReference = 58FBD8A32682DD700008FA45 /* MySTL */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58FBD89E2682DD700008FA45 /* Build configuration list for PBXProject "myVector" */;
+			buildConfigurationList = 58FBD89E2682DD700008FA45 /* Build configuration list for PBXProject "MySTL" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -120,7 +120,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58FBD8A22682DD700008FA45 /* myVector */,
+				58FBD8A22682DD700008FA45 /* MySTL */,
 			);
 		};
 /* End PBXProject section */
@@ -267,7 +267,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58FBD89E2682DD700008FA45 /* Build configuration list for PBXProject "myVector" */ = {
+		58FBD89E2682DD700008FA45 /* Build configuration list for PBXProject "MySTL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58FBD8A82682DD700008FA45 /* Debug */,
@@ -276,7 +276,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58FBD8AA2682DD700008FA45 /* Build configuration list for PBXNativeTarget "myVector" */ = {
+		58FBD8AA2682DD700008FA45 /* Build configuration list for PBXNativeTarget "MySTL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58FBD8AB2682DD700008FA45 /* Debug */,
