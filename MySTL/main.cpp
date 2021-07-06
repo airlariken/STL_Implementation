@@ -10,6 +10,7 @@
 #include "my_stl_iterator.h"
 #include "my_algorithm.h"
 #include "myDeque.h"
+#include "myRbTree.h"
 using namespace std;
 
 //struct A{
@@ -35,21 +36,31 @@ int main(int argc, const char * argv[]) {
         for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
             *it1 = cnt++;
         }
-        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
-            cout<<*it1<<'\t';
-        }
+//        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+//            cout<<*it1<<'\t';
+//        }
         cout<<endl;
         for (int i = 0; i < 100; ++i) {
 //            m_deq.push_back(i*10);
             m_deq.push_front(i*10);
-            for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
-                cout<<*it1<<'\t';
-            }
-            cout<<endl;
+//            for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+//                cout<<*it1<<'\t';
+//            }
+//            cout<<endl;
         }
-//        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
-//            cout<<*it1<<'\t';
-//        }
+
+        
+        cout<<"ini_deq:"<<endl;
+        for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
+            cout<<*it1<<'\t';
+        }
+        
+        deque<int, 2> my_new_deq(m_deq);
+        cout<<"copy_deq:"<<endl;
+        for (auto it1 = my_new_deq.begin(); it1 != my_new_deq.end(); ++it1) {
+            cout<<*it1<<'\t';
+        }
+
         
         
 //        cout<<"size:"<<mv.size()<<endl;

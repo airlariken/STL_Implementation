@@ -24,12 +24,12 @@
 
 /* Begin PBXFileReference section */
 		58027160269007450028F92B /* myDeque.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = myDeque.h; sourceTree = "<group>"; };
+		5802716626936B460028F92B /* myRbTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myRbTree.h; sourceTree = "<group>"; };
 		58A066D1268437D300F17D7B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		58FBD8A32682DD700008FA45 /* MySTL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MySTL; sourceTree = BUILT_PRODUCTS_DIR; };
 		58FBD8A62682DD700008FA45 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		58FBD8AE2682DD7C0008FA45 /* myVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myVector.h; sourceTree = "<group>"; };
 		58FBD8B0268336AB0008FA45 /* my_stl_iterator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = my_stl_iterator.h; sourceTree = "<group>"; };
-		58FBD8B2268336ED0008FA45 /* myList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myList.h; sourceTree = "<group>"; };
 		58FBD8B42683379A0008FA45 /* my_algorithm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = my_algorithm.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,6 +47,7 @@
 		58FBD89A2682DD700008FA45 = {
 			isa = PBXGroup;
 			children = (
+				58A066D1268437D300F17D7B /* README.md */,
 				58FBD8A52682DD700008FA45 /* MySTL */,
 				58FBD8A42682DD700008FA45 /* Products */,
 			);
@@ -64,12 +65,11 @@
 			isa = PBXGroup;
 			children = (
 				58FBD8A62682DD700008FA45 /* main.cpp */,
+				5802716626936B460028F92B /* myRbTree.h */,
 				58FBD8AE2682DD7C0008FA45 /* myVector.h */,
 				58027160269007450028F92B /* myDeque.h */,
 				58FBD8B42683379A0008FA45 /* my_algorithm.h */,
-				58FBD8B2268336ED0008FA45 /* myList.h */,
 				58FBD8B0268336AB0008FA45 /* my_stl_iterator.h */,
-				58A066D1268437D300F17D7B /* README.md */,
 			);
 			path = MySTL;
 			sourceTree = "<group>";

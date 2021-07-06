@@ -15,12 +15,10 @@ namespace MyStl {
 
 inline size_t __deque_buf_size(size_t buf_size, size_t ele_size) {
     //n表示bufSize的大小,sz表示变量类型的大小
-    if (buf_size != 0)
-    {
+    if (buf_size != 0) {
         return buf_size;
     }
-    else
-    {
+    else {
         if (ele_size < DEQUE_DEFAULT_BUFF_BYTES)
             return size_t(DEQUE_DEFAULT_BUFF_BYTES / ele_size);
         else
@@ -53,7 +51,7 @@ public:
 public:
     static size_t __S_deque_buff_size(){return __deque_buf_size(Bufsize, sizeof(_Tp));}
     
-    _Deque_iterator(map_pointer new_node):first(*new_node), cur(*new_node), last(*new_node+__S_deque_buff_size()), node(new_node){/*last += __S_deque_buff_size();*/}
+    explicit _Deque_iterator(map_pointer new_node):first(*new_node), cur(*new_node), last(*new_node+__S_deque_buff_size()), node(new_node){/*last += __S_deque_buff_size();*/}
     _Deque_iterator():first(nullptr), cur(nullptr), last(nullptr), node(nullptr){}
     _Deque_iterator(const __self& it) = default;//值拷贝即可
     void set_node(map_pointer new_node, size_t buff_size) {
@@ -160,7 +158,6 @@ public:
     
     
 protected:
-
     map_pointer map;
     iterator start;
     iterator finish;
@@ -172,6 +169,7 @@ protected:
     _Deque_base(size_t num_elements):start(), finish() {
         initialize_map(num_elements);
     }
+    _Deque_base(bool for_copy_struct){}
     
     void initialize_map(size_t num_elements){
         size_t buff_size = iterator::__S_deque_buff_size();
@@ -228,7 +226,35 @@ public:
     //ctor
     deque() = default;
     deque(size_t size):_Deque_base<_Tp, BufSiz>(size){}
+    deque(const deque<_Tp, BufSiz>& deq):_Deque_base<_Tp, BufSiz>(true) {//copy_ctor
+        
+        size_t buff_size = iterator::__S_deque_buff_size();
+        this->map_size = deq.map_size;
+        size_t start_offset = deq.start.node - deq.map;
+        size_t finish_offset = deq.finish.node - deq.map;
+        this->map = new pointer[this->map_size];
+        for(int i = 0; i < this->map_size; ++i) this->map[i] = nullptr;
+        for (auto i = start_offset; i <= finish_offset; ++i)//开辟node节点的buff
+            this->map[i] = new value_type[buff_size];
+        //确定start和finish iterator的位置以及其成员cur的位置，方便后续赋值操作
+        this->start.set_node(this->map+start_offset, buff_size);
+        this->start.cur = this->start.first + (deq.start.cur - deq.start.first);
+        this->finish.set_node(this->map+finish_offset, buff_size);
+        this->finish.cur = this->finish.first + (deq.finish.cur - deq.finish.first);
+        
+        //高效的拷贝
+        for(auto i = start_offset; i <= finish_offset; ++i)
+            memcpy(*(this->map+i), *(deq.map+i), sizeof(value_type)*buff_size);
+        //低效的拷贝
+//        for (auto it = deq.begin(), it1 = this->begin(); it1 != this->end() && it != deq.end(); ++it, ++it1)
+//            *it1 = *it;
+        
+    }
+
+    
+    
     //operator override
+    
     const_reference operator[](const int& n) const {//有必要const吗
         iterator it = this->start;
         return *it[n];
@@ -313,7 +339,7 @@ public:
         this->start.node = this->map + new_map_start_offset;
         this->finish.node = this->start.node + node_cnt;
     }
-public:
+//接口函数
     iterator begin() const{
         return this->start;
     }
