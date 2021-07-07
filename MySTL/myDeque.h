@@ -68,7 +68,7 @@ public:
 //        __self temp(*this);
         long off_set = n + (this->cur - this->first);
         size_t buff_size = __S_deque_buff_size();
-        if(off_set > 0 && off_set < buff_size) {
+        if(off_set >= 0 && off_set < buff_size) {
             this->cur += n;
             return *this;
         }
@@ -93,7 +93,8 @@ public:
     }
     __self operator-(const int& n) {
         __self temp(*this);
-        return temp-=n;
+        temp-=n;
+        return temp;
     }
     
     __self& operator++() {
@@ -393,18 +394,18 @@ typename deque< _Tp, BufSiz>::iterator deque< _Tp, BufSiz>::erase(typename deque
     
     //判断离front近还是离back近，近的一方挪动
     if (to_front_ele_cnt > to_last_ele_cnt) {
-        iterator it_right = it + 1;
-        while (it_right != this->finish) {
-            *it = *it_right;
-            ++it;   ++it_right;
+        
+        while (it + 1 != this->finish) {
+            *it = *(it + 1);
+            ++it;
         }
         pop_back();
     }
     else {
-        iterator it_left = it - 1 ;
+        
         while (it != this->start) {
-            *it = *it_left;
-            --it;   --it_left;
+            *it = *(it - 1);
+            --it;
         }
         pop_front();
     }

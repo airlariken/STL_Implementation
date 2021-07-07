@@ -53,8 +53,12 @@ int main(int argc, const char * argv[]) {
 //        m_deq.erase(it_beg);
 //        auto it_end = m_deq.end()-1;
 //        m_deq.erase(it_end);
-        auto it = m_deq.begin()+1;
-        m_deq.erase(it);
+        
+        for (int i = 0; i < 102 ; ++i) {
+            auto it = m_deq.begin() + 2;
+            m_deq.erase(it);
+        }
+
         
         cout<<"ini_deq:"<<endl;
         for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
