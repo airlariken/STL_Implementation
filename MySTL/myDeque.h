@@ -81,7 +81,7 @@ public:
         
 //        new_node += node_off_set / buff_size;
         this->set_node(this->node+node_off_set, buff_size);
-        this->cur = this->first + node_off_set % buff_size;
+        this->cur = this->first + off_set % buff_size;
         return *this;
     }
     __self& operator-=(const int& n) {
@@ -151,6 +151,7 @@ public:
     typedef     _Tp                          value_type;
     typedef     _Tp*                         pointer;
     typedef     _Tp&                         reference;
+    typedef     const _Tp&                   const_reference;
     typedef     unsigned int                 difference_type;
     typedef     _Deque_iterator<_Tp, _Tp&, _Tp*, BufSiz>                    iterator;
     typedef     _Deque_iterator<_Tp, const _Tp&, const _Tp*, BufSiz>        const_iterator;
@@ -339,6 +340,35 @@ public:
         this->start.node = this->map + new_map_start_offset;
         this->finish.node = this->start.node + node_cnt;
     }
+    
+    void pop_front() {
+        if(this->size() == 0)   return;
+        if (this->start.cur == this->start.last - 1) {
+            pointer delete_node = *(this->start.node);
+            this->start.set_node(this->start.node+1, iterator::__S_deque_buff_size());
+            //释放内存并且维护指针
+            delete []delete_node;
+            delete_node = nullptr;
+            
+        }
+        else
+            ++this->start.cur;
+    }
+    
+    
+    
+    void pop_back() {
+        if(this->size() == 0)   return;
+        if (this->finish.cur == this->finish.first) {
+            pointer delete_node = *(this->finish.node);
+            this->finish.set_node(this->start.node-1, iterator::__S_deque_buff_size());
+            //释放内存并且维护指针
+            delete []delete_node;
+            delete_node = nullptr;
+        }
+        else
+            --this->finish.cur;
+    }
 //接口函数
     iterator begin() const{
         return this->start;
@@ -348,10 +378,38 @@ public:
     }
     difference_type size() const{return this->finish - this->start;}
     difference_type capacity() const{return this->map_size * iterator::__S_deque_buff_size();}
+    reference back() {  return *(--this->finish);}
+    reference front() {return *this->start;}
+    const_reference back() const{  return *(--this->finish);}
+    const_reference front()const {return *this->start;}
+    iterator erase(iterator& it);
     
 };
 
-
+template<typename _Tp, size_t BufSiz>
+typename deque< _Tp, BufSiz>::iterator deque< _Tp, BufSiz>::erase(typename deque< _Tp, BufSiz>::iterator& it) {
+    difference_type to_front_ele_cnt = it - this->start;
+    difference_type to_last_ele_cnt = this->finish - it;
+    
+    //判断离front近还是离back近，近的一方挪动
+    if (to_front_ele_cnt > to_last_ele_cnt) {
+        iterator it_right = it + 1;
+        while (it_right != this->finish) {
+            *it = *it_right;
+            ++it;   ++it_right;
+        }
+        pop_back();
+    }
+    else {
+        iterator it_left = it - 1 ;
+        while (it != this->start) {
+            *it = *it_left;
+            --it;   --it_left;
+        }
+        pop_front();
+    }
+    return it;
+}
 
 
 }

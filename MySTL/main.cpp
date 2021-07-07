@@ -48,7 +48,13 @@ int main(int argc, const char * argv[]) {
 //            }
 //            cout<<endl;
         }
-
+        
+//        auto it_beg = m_deq.begin();
+//        m_deq.erase(it_beg);
+//        auto it_end = m_deq.end()-1;
+//        m_deq.erase(it_end);
+        auto it = m_deq.begin()+1;
+        m_deq.erase(it);
         
         cout<<"ini_deq:"<<endl;
         for (auto it1 = m_deq.begin(); it1 != m_deq.end(); ++it1) {
